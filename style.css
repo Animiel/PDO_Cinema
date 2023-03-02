@@ -1,3 +1,25 @@
+.back {
+    border: 2px solid black;
+    padding: 3px;
+    font-size: 18px;
+    text-decoration: none;
+    color: black;
+}
+
+h1 {
+    font-family:'Lucida Sans', sans-serif;
+    text-align: center;
+    color: rgb(190, 54, 54);
+}
+
+h2, h3 {
+    font-family: 'Lucida Sans', sans-serif;
+}
+
+p {
+    font-size: 20px;
+}
+
 table {
     font-family: 'Lucida Sans', sans-serif;
     text-align: center;
@@ -20,4 +42,8 @@ tr:nth-child(even) {
 
 td {
     border: 1px solid black;
+}
+
+i {
+    color: rgb(189, 189, 37);
 }
