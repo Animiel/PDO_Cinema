@@ -1,0 +1,23 @@
+table {
+    font-family: 'Lucida Sans', sans-serif;
+    text-align: center;
+    border: 1px solid black;
+    border-collapse: collapse;
+}
+
+th {
+    background-color: black;
+    color: white;
+}
+
+tr {
+    line-height: 30px;
+}
+
+tr:nth-child(even) {
+    background-color: rgb(235, 235, 235);
+}
+
+td {
+    border: 1px solid black;
+}
