@@ -1,32 +1,42 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css" type="text/css">
-    <title>Document</title>
-</head>
-<body>
-    
-<h1>Intro PDO Cinéma</h1>
+
 
 
 <?php
 
-// CONNEXION A LA BASE DE DONNEES
+use Controller\CinemaController;
 
-try {
-    $mysqlConnection = new PDO (
-        "mysql:host=localhost;dbname=cinemadl8;charset=utf8",
-        "root",
-        "",
-        [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]
-    );
+spl_autoload_register(function ($class_name) {
+    include $class_name.'.php';
+});
+
+$ctrlCinema = new CinemaController();
+
+if (isset($_GET['action'])) {
+    switch ($_GET['action']) {
+        
+        case 'listeFilms' : $ctrlCinema->listeFilms();
+        break;
+
+        case 'listeActeurs' : $ctrlCinema->listeActeurs();
+        break;
+    }
 }
-catch (Exception $e) {
-    die("Erreur : " . $e->getMessage());
-}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 // TRAITEMENT
 
