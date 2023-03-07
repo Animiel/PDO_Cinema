@@ -41,6 +41,10 @@ if (isset($_GET['action'])) {
             $id = $_GET['id'];
             $ctrlCinema->detailRealisateur($id);
         break;
+
+        case 'listeGenres' :
+            $ctrlCinema->listeGenres();
+        break;
     }
 }
 

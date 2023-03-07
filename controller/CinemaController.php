@@ -127,6 +127,49 @@ class CinemaController {
 
         require "view/listeRealisateurs.php";
     }
+
+    public function detailRealisateur($id) {
+        if (isset($_GET['id'])) {
+            $id = $_GET['id'];
+
+            $pdo = Connect::seConnecter();
+            $sqlReal = "SELECT nom_realisateur, prenom_realisateur
+                        FROM realisateur
+                        WHERE id_realisateur = :identite";
+            $realState = $pdo->prepare($sqlReal);
+            $realState->execute([
+                ":identite" => $id
+            ]);
+            $realisateur = $realState->fetch();
+
+            $sqlFilmo = "SELECT realisateur.id_realisateur, titre_film, annee_film, role.nom_role,CONCAT( realisateur.nom_realisateur, ' ',   realisateur.prenom_realisateur) AS civilite_real, CONCAT (nom_acteur,' ', prenom_acteur) as civilite_acteur
+                        FROM film
+                        INNER JOIN casting ON casting.id_film = film.id_film
+                        INNER JOIN role ON casting.id_role = role.id_role
+                        INNER JOIN acteur ON casting.id_acteur = acteur.id_acteur
+                        INNER JOIN realisateur ON film.id_realisateur = realisateur.id_realisateur
+                        WHERE realisateur.id_realisateur = :identite
+                        ORDER BY annee_film DESC";
+            $stateFilmo = $pdo->prepare($sqlFilmo);
+            $stateFilmo->execute([
+                "identite" => $id
+            ]);
+            $filmo = $stateFilmo->fetchAll();
+
+            require "view/detailRealisateur.php";
+        }
+    }
+
+    public function listeGenres() {
+        $pdo = Connect::seConnecter();
+        $sqlGenres = "SELECT id_genre, nom_genre
+                    FROM genre
+                    ORDER BY nom_genre";
+        $stateGenre = $pdo->query($sqlGenres);
+        $genres = $stateGenre->fetchAll();
+
+        require "view/listeGenres.php";
+    }
 }
 
 ?>
