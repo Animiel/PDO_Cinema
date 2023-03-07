@@ -3,7 +3,8 @@ ob_start();
 ?>
 
 <ul>
-    <li><a href="view/index.php?action=listeFilms">Voir la liste des films en stock</a></li>
+    <li><a href="index.php?action=listeFilms">Voir la liste des films en stock</a></li>
+</ul>
 
 <?php
 

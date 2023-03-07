@@ -61,6 +61,10 @@ class CinemaController {
             
         }
     }
+
+    public function homepage() {
+        require "view/homepage.php";  
+    }
 }
 
 ?>

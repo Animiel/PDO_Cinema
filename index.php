@@ -23,6 +23,9 @@ if (isset($_GET['action'])) {
             $id = $_GET['id'];
             $ctrlCinema->detailFilm($id);
         break;
+
+        case 'homepage' :
+            $ctrlCinema->homepage();
     }
 }
 
