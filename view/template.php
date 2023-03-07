@@ -10,8 +10,9 @@
 </head>
 <body>
     <nav>
-        <a href="index.php?action=listeFilms" class="navi">Retour aux films</a>
         <a href="index.php?action=homepage" class="navi">Acceuil</a>
+        <a href="index.php?action=listeFilms" class="navi">Films</a>
+        <a href="index.php?action=listeActeurs" class="navi">Acteurs</a>
     </nav>
 
     <h1>Intro PDO Cinéma</h1>

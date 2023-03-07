@@ -11,12 +11,12 @@ $ctrlCinema = new CinemaController();
 if (isset($_GET['action'])) {
     switch ($_GET['action']) {
         
+        case 'homepage' :
+            $ctrlCinema->homepage();
+        break;
+
         case 'listeFilms' :
             $ctrlCinema->listeFilms();
-        break;
-        
-        case 'listeActeurs' :
-            $ctrlCinema->listeActeurs();
         break;
         
         case 'detailFilm' :
@@ -24,8 +24,14 @@ if (isset($_GET['action'])) {
             $ctrlCinema->detailFilm($id);
         break;
 
-        case 'homepage' :
-            $ctrlCinema->homepage();
+        case 'listeActeurs' :
+            $ctrlCinema->listeActeurs();
+        break;
+        
+        case 'detailActeur' :
+            $id = $_GET['id'];
+            $ctrlCinema->detailActeur($id);
+        break;
     }
 }
 

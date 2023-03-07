@@ -65,6 +65,17 @@ class CinemaController {
     public function homepage() {
         require "view/homepage.php";  
     }
+
+    public function listeActeurs() {
+        $pdo = Connect::seConnecter();
+        $sqlActeur = "SELECT id_acteur, prenom_acteur, nom_acteur, sexe_acteur
+                    FROM acteur
+                    ORDER BY nom_acteur, prenom_acteur";
+        $requete = $pdo->query($sqlActeur);
+        $acteurs = $requete->fetchAll();
+
+        require "view/listeActeurs.php";
+    }
 }
 
 ?>
