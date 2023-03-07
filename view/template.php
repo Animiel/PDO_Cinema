@@ -9,6 +9,10 @@
     <title><?= $titre ?></title>
 </head>
 <body>
+    <nav>
+        <a href="index.php?action=listeFilms" class="navi">Retour aux films</a>
+        <a href="index.php?action=homepage" class="navi">Acceuil</a>
+    </nav>
 
     <h1>Intro PDO Cinéma</h1>
         <h2><?= $titre_secondaire ?></h2>
