@@ -76,6 +76,46 @@ class CinemaController {
 
         require "view/listeActeurs.php";
     }
+
+    public function detailActeur($id) {
+        if (isset($_GET['id'])) {
+            $id = $_GET['id'];
+
+            $pdo = Connect::seConnecter();
+            $sqlActeur = "SELECT id_acteur, prenom_acteur, nom_acteur, DATE_FORMAT(date_naissance_acteur, '%d/%m/%Y') AS naissance_acteur, sexe_acteur
+                        FROM acteur
+                        WHERE id_acteur = :identite";
+            $acteurState = $pdo->prepare($sqlActeur);
+            $acteurState->execute([
+                ":identite" => $id
+            ]);
+            $detailActeur = $acteurState->fetch();
+
+            $sqlFilmo = "SELECT titre_film, annee_film, nom_role
+                        FROM film
+                        INNER JOIN casting ON casting.id_film = film.id_film
+                        INNER JOIN acteur ON casting.id_acteur = acteur.id_acteur
+                        INNER JOIN role ON casting.id_role = role.id_role
+                        WHERE acteur.id_acteur = :identite
+                        ORDER BY film.annee_film DESC";
+            $filmoState = $pdo->prepare($sqlFilmo);
+            $filmoState->execute([
+                ":identite" => $id
+            ]);
+            $filmo = $filmoState->fetchAll();
+
+            $result = "";
+            foreach ($filmo as $film) {
+                $result .= "<tr>
+                            <td>".$film['titre_film']."</td>
+                            <td>".$film['annee_film']."</td>
+                            <td>".$film['nom_role']."</td>
+                            </tr>";
+            }
+
+            require "view/detailActeur.php";
+        }
+    }
 }
 
 ?>
