@@ -5,6 +5,7 @@ ob_start();
 <ul>
     <li><a href="index.php?action=listeFilms">Voir la liste des films disponibles</a></li>
     <li><a href="index.php?action=listeActeurs">Voir la liste des acteurs disponibles</a></li>
+    <li><a href="index.php?action=listeRealisateurs">Voir la liste des réalisateurs disponibles</a></li>
 </ul>
 
 <?php

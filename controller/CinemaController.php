@@ -116,6 +116,17 @@ class CinemaController {
             require "view/detailActeur.php";
         }
     }
+
+    public function listeRealisateurs() {
+        $pdo = Connect::seConnecter();
+        $sqlRealisateur = "SELECT id_realisateur, nom_realisateur, prenom_realisateur
+                        FROM realisateur
+                        ORDER BY nom_realisateur, prenom_realisateur";
+        $stateRealisateur = $pdo->query($sqlRealisateur);
+        $listeReals = $stateRealisateur->fetchAll();
+
+        require "view/listeRealisateurs.php";
+    }
 }
 
 ?>

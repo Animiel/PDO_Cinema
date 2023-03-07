@@ -32,6 +32,15 @@ if (isset($_GET['action'])) {
             $id = $_GET['id'];
             $ctrlCinema->detailActeur($id);
         break;
+
+        case 'listeRealisateurs' :
+            $ctrlCinema->listeRealisateurs();
+        break;
+
+        case 'detailRealisateur' :
+            $id = $_GET['id'];
+            $ctrlCinema->detailRealisateur($id);
+        break;
     }
 }
 

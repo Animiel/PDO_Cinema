@@ -13,6 +13,7 @@
         <a href="index.php?action=homepage" class="navi">Acceuil</a>
         <a href="index.php?action=listeFilms" class="navi">Films</a>
         <a href="index.php?action=listeActeurs" class="navi">Acteurs</a>
+        <a href="index.php?action=listeRealisateurs" class="navi">Réalisateurs</a>
     </nav>
 
     <h1>Intro PDO Cinéma</h1>
