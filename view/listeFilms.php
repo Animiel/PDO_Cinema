@@ -2,6 +2,8 @@
 ob_start();
 ?>
 
+<a href="index.php?action=ajouterFilm" class="modif">Ajouter un film</a>
+
 <table>
     <thead>
         <tr>

@@ -59,6 +59,10 @@ if (isset($_GET['action'])) {
             $id = $_GET['id'];
             $ctrlCinema->detailRole($id);
         break;
+
+        case 'ajouterFilm' :
+            $ctrlCinema->ajouterFilm();
+        break;
     }
 }
 

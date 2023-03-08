@@ -241,6 +241,10 @@ class CinemaController {
             require "view/detailRole.php";
         }
     }
+
+    public function ajouterFilm() {
+        require "view/ajouterFilm.php";
+    }
 }
 
 ?>
