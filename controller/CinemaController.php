@@ -170,6 +170,36 @@ class CinemaController {
 
         require "view/listeGenres.php";
     }
+
+    public function detailGenre($id) {
+        if (isset($_GET['id'])) {
+            $id = $_GET['id'];
+
+            $pdo = Connect::seConnecter();
+            $sqlGenre = "SELECT id_genre, nom_genre
+                        FROM genre
+                        WHERE id_genre = :identite
+                        ORDER BY nom_genre";
+            $stateGenre = $pdo->prepare($sqlGenre);
+            $stateGenre->execute([
+                ":identite" => $id
+            ]);
+            $genre = $stateGenre->fetch();
+
+            $sqlFilms = "SELECT titre_film, annee_film, gf.id_genre
+                        FROM film
+                        INNER JOIN genre_film gf ON gf.id_film = film.id_film
+                        WHERE gf.id_genre = :identite
+                        ORDER BY annee_film DESC";
+            $stateFilms = $pdo->prepare($sqlFilms);
+            $stateFilms->execute([
+                ":identite" => $id
+            ]);
+            $listeFilms = $stateFilms->fetchAll();
+
+            require "view/detailGenre.php";
+        }
+    }
 }
 
 ?>

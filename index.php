@@ -45,7 +45,14 @@ if (isset($_GET['action'])) {
         case 'listeGenres' :
             $ctrlCinema->listeGenres();
         break;
+
+        case 'detailGenre' :
+            $id = $_GET['id'];
+            $ctrlCinema->detailGenre($id);
+        break;
     }
 }
+
+// require "view/homepage.php";
 
 ?>
