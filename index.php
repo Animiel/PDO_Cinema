@@ -50,6 +50,15 @@ if (isset($_GET['action'])) {
             $id = $_GET['id'];
             $ctrlCinema->detailGenre($id);
         break;
+
+        case 'listeRoles' :
+            $ctrlCinema->listeRoles();
+        break;
+
+        case 'detailRole' :
+            $id = $_GET['id'];
+            $ctrlCinema->detailRole($id);
+        break;
     }
 }
 

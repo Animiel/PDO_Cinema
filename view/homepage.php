@@ -7,6 +7,7 @@ ob_start();
     <li><a href="index.php?action=listeActeurs">Voir la liste des acteurs disponibles</a></li>
     <li><a href="index.php?action=listeRealisateurs">Voir la liste des réalisateurs disponibles</a></li>
     <li><a href="index.php?action=listeGenres">Voir la liste des genres disponibles</a></li>
+    <li><a href="index.php?action=listeRoles">Voir la liste des rôles disponibles</a></li>
 </ul>
 
 <?php

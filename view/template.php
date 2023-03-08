@@ -15,6 +15,7 @@
         <a href="index.php?action=listeActeurs" class="navi">Acteurs</a>
         <a href="index.php?action=listeRealisateurs" class="navi">Réalisateurs</a>
         <a href="index.php?action=listeGenres" class="navi">Genres</a>
+        <a href="index.php?action=listeRoles" class="navi">Roles</a>
     </nav>
 
     <h1>Intro PDO Cinéma</h1>

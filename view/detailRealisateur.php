@@ -27,6 +27,8 @@ ob_start();
                 <?php } ?>
 
         <?php }?>
+    </tbody>
+</table>
 
 <?php
 $titre = "Détail de réalisateur";

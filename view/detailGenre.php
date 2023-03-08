@@ -16,6 +16,8 @@ ob_start();
                 <td><?= $film['annee_film'] ?></td>
             </tr>
         <?php } ?>
+    </tbody>
+</table>
 
 <?php
 $titre = "Détail de genre";

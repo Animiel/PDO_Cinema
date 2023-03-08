@@ -19,6 +19,7 @@ ob_start();
     <tbody>
         <?= $result ?>
     </tbody>
+</table>
 
 <?php
 $titre = "Détail d'acteur";
