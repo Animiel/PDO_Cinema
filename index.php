@@ -67,6 +67,10 @@ if (isset($_GET['action'])) {
         case 'ajouterRealisateur' :
             $ctrlCinema->ajouterRealisateur();
         break;
+
+        case 'ajouterGenre' :
+            $ctrlCinema->ajouterGenre();
+        break;
     }
 }
 

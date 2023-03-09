@@ -1,6 +1,5 @@
 <?php
 ob_start();
-
 ?>
 
 <form action="index.php?action=ajouterFilm" method="post">
