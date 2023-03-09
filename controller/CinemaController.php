@@ -319,6 +319,25 @@ class CinemaController {
         }
         require "view/ajouterGenre.php";
     }
+
+    public function ajouterRole() {
+        
+        if (isset($_POST['submit'])) {
+            $nom = filter_input(INPUT_POST, "name", FILTER_SANITIZE_SPECIAL_CHARS);
+
+            if ($nom) {
+
+                $pdo = Connect::seConnecter();
+                $sqlGenre = "INSERT INTO role (nom_role)
+                            VALUES (:nom)";
+                $stateGenre = $pdo->prepare($sqlGenre);
+                $stateGenre->execute([
+                    ":nom" => $_POST['name']
+                ]);
+            }
+        }
+        require "view/ajouterRole.php";
+    }
 }
 
 ?>
