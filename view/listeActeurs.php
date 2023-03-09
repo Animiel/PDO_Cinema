@@ -2,6 +2,8 @@
 ob_start();
 ?>
 
+<a href="index.php?action=ajouterActeur" class="modif">Ajouter un acteur</a>
+
 <ul>
     <?php foreach ($acteurs as $acteur) { ?>
         <li>

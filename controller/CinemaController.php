@@ -338,6 +338,31 @@ class CinemaController {
         }
         require "view/ajouterRole.php";
     }
+
+    public function ajouterActeur() {
+
+        if (isset($_POST['submit'])) {
+            $nom = filter_input(INPUT_POST, "nom_acteur", FILTER_SANITIZE_SPECIAL_CHARS);
+            $prenom = filter_input(INPUT_POST, "prenom_acteur", FILTER_SANITIZE_SPECIAL_CHARS);
+            $naissance = filter_input(INPUT_POST, "date_naissance", FILTER_SANITIZE_SPECIAL_CHARS);
+            $sexe = filter_input(INPUT_POST, "sexe", FILTER_SANITIZE_SPECIAL_CHARS);
+
+            if ($nom && $prenom && ($naissance && $naissance != null) && $sexe) {
+
+                $pdo = Connect::seConnecter();
+                $sqlFilm = "INSERT INTO acteur (nom_acteur, prenom_acteur, date_naissance_acteur, sexe_acteur)
+                            VALUES (:nom, :prenom, :naissance, :sexe)";
+                $stateFilm = $pdo->prepare($sqlFilm);
+                $stateFilm->execute([
+                    ":nom" => $_POST['nom_acteur'],
+                    ":prenom" => $_POST['prenom_acteur'],
+                    ":naissance" => $_POST['date_naissance'],
+                    ":sexe" => $_POST['sexe']
+                ]);
+            }
+        }
+        require "view/ajouterActeur.php";
+    }
 }
 
 ?>
