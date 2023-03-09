@@ -2,6 +2,8 @@
 ob_start();
 ?>
 
+<a href="index.php?action=ajouterRealisateur" class="modif">Ajouter un réalisateur</a>
+
 <ul>
     <?php foreach ($listeReals as $real) { ?>
         <li>

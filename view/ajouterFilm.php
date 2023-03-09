@@ -3,7 +3,7 @@ ob_start();
 
 ?>
 
-<form action="index.php?action=ajouterFilm" method="post" enctype="multipart/form-data">
+<form action="index.php?action=ajouterFilm" method="post">
     <p>
         <label>Titre du film :
             <input type="text" name="titre_film">
@@ -50,6 +50,7 @@ ob_start();
                 <?php } ?>
             </select>
         </label>
+        Si le réalisateur n'apparaît pas dans la liste, merci de l'ajouter via ce lien : <a href="index.php?action=ajouterRealisateur" class="modif">Ajouter un réalisateur</a>
     </p>
 
     <p>

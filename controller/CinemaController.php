@@ -277,8 +277,28 @@ class CinemaController {
                 $film = $stateFilm->fetch();
             }
         }
-
         require "view/ajouterFilm.php";
+    }
+
+    public function ajouterRealisateur() {
+        
+        if (isset($_POST['submit'])) {
+            $nom = filter_input(INPUT_POST, "name", FILTER_SANITIZE_SPECIAL_CHARS);
+            $prenom = filter_input(INPUT_POST, "firstname", FILTER_SANITIZE_SPECIAL_CHARS);
+
+            if ($nom && $prenom) {
+
+                $pdo = Connect::seConnecter();
+                $sqlReal = "INSERT INTO realisateur (nom_realisateur, prenom_realisateur)
+                            VALUES (:nom, :prenom)";
+                $stateReal = $pdo->prepare($sqlReal);
+                $stateReal->execute([
+                    ":nom" => $_POST['name'],
+                    ":prenom" => $_POST['firstname']
+                ]);
+            }
+        }
+        require "view/ajouterRealisateur.php";
     }
 }
 
