@@ -241,8 +241,43 @@ class CinemaController {
             require "view/detailRole.php";
         }
     }
-
+    
     public function ajouterFilm() {
+
+        $pdo = Connect::seConnecter();
+        $sqlReal = "SELECT id_realisateur, nom_realisateur, prenom_realisateur
+                    FROM realisateur";
+        $stateReal = $pdo->query($sqlReal);
+        $reals = $stateReal->fetchAll();
+       
+        if (isset($_POST['submit'])) {
+            $titre = filter_input(INPUT_POST, "titre_film", FILTER_SANITIZE_SPECIAL_CHARS);
+            $annee = filter_input(INPUT_POST, "date_film", FILTER_VALIDATE_INT);
+            $duree = filter_input(INPUT_POST, "duree_film", FILTER_VALIDATE_INT);
+            $note = filter_input(INPUT_POST, "note_film", FILTER_VALIDATE_INT);
+            $synopsis = filter_input(INPUT_POST, "synopsis", FILTER_SANITIZE_SPECIAL_CHARS);
+            $url = filter_input(INPUT_POST, "affiche_film", FILTER_VALIDATE_URL);
+            $id_real = $_POST['realisateurs'];
+
+            if ($titre && ($duree && $duree > 0) && ($annee && $annee > 0) && ($note && $note > 0 && $note <= 5) && $synopsis && $url) {
+
+                    $pdo = Connect::seConnecter();
+                    $sqlFilm = "INSERT INTO film (titre_film, annee_film, duree_film, resume_film, note_film, url_image, id_realisateur)
+                                VALUES (:titre, :annee, :duree, :resume_film, :note, :affiche, :identite)";
+                    $stateFilm = $pdo->prepare($sqlFilm);
+                    $stateFilm->execute([
+                        ":titre" => $_POST['titre_film'],
+                        ":annee" => $_POST['date_film'],
+                        ":duree" => $_POST['duree_film'],
+                        ":resume_film" => $_POST['synopsis'],
+                        ":note" => $_POST['note_film'],
+                        ":affiche" => $_POST['affiche_film'],
+                        ":identite" => $_POST['realisateurs']
+                    ]);
+                $film = $stateFilm->fetch();
+            }
+        }
+
         require "view/ajouterFilm.php";
     }
 }

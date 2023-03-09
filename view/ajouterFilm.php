@@ -1,36 +1,64 @@
 <?php
 ob_start();
+
 ?>
 
-<form>
-    <label>Titre du film :<br>
-        <input type="text" id="titre_film">
-    </label><br><br>
+<form action="index.php?action=ajouterFilm" method="post" enctype="multipart/form-data">
+    <p>
+        <label>Titre du film :
+            <input type="text" name="titre_film">
+        </label>
+    </p>
 
-    <label>Date de sortie du film :<br>
-        <input type="date" id="date_film">
-    </label><br><br>
+    <p>
+        <label>Date de sortie du film :
+            <input type="number" name="date_film">
+        </label>
+    </p>
 
-    <label>Durée du film :<br>
-        <input type="number" id="duree_film">
-    </label><br><br>
+    <p>
+        <label>Durée du film (en minutes) :
+            <input type="number" name="duree_film">
+        </label>
+    </p>
 
-    <label>Note du film :<br>
-        <input type="number" id="note_film">
-    </label><br><br>
+    <p>
+        <label>Note du film (sur 5) :
+            <input type="number" name="note_film">
+        </label>
+    </p>
 
-    <label>Affiche du film :<br>
-        <input type="file" id="affiche_film">
-    </label><br><br>
+    <p>
+        <label>Affiche du film :
+            <input type="url" name="affiche_film">
+        </label>
+    </p>
 
-    <label>Synopsis du film :<br>
-        <textarea rows="5" cols="50">
-        </textarea>
-    </label><br><br>
+    <p>
+        <label>Synopsis du film :<br>
+            <textarea name="synopsis" rows="5" cols="50"></textarea>
+        </label>
+    </p>
+
+    <p>
+        <label>Réalisateur :
+            <select name="realisateurs">
+                <?php foreach ($reals as $real) { ?>
+                    <option value="<?= $real['id_realisateur'] ?>">
+                        <?= $real['nom_realisateur'] ?> <?= $real['prenom_realisateur'] ?>
+                    </option>
+                <?php } ?>
+            </select>
+        </label>
+    </p>
+
+    <p>
+        <input type="submit" name="submit" value="Ajouter le film">
+    </p>
 </form>
 
 <?php
-$titre = "Ajout film";
+$titre = "Ajouter un film";
 $titre_secondaire = "Formulaire d'ajout";
 $contenu = ob_get_clean();
 require "view/template.php";
