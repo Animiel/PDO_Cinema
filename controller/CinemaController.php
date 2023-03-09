@@ -44,14 +44,9 @@ class CinemaController {
             $film = $sqlStateFilm->fetch();
             $casting = $sqlStateCasting->fetchAll();
 
-            if ($film['note_film'] == 0) {
-                $result = str_repeat("<i class='fa-regular fa-star'></i>", 5);
-            }
-            else {
                 $reste = 5 - $film['note_film'];
                 $result = str_repeat("<i class='fa-solid fa-star'></i>", $film['note_film']).str_repeat("<i class='fa-regular fa-star'></i>", $reste);
-            }
-
+            
             $listeCasting = "";
             foreach ($casting as $cast) {
                 $listeCasting .= "<li>".$cast['prenom_acteur']." ".$cast['nom_acteur']." (".$cast['nom_role'].")</li><br>";
@@ -244,11 +239,17 @@ class CinemaController {
     
     public function ajouterFilm() {
 
+        require "public/js/values.js";
         $pdo = Connect::seConnecter();
         $sqlReal = "SELECT id_realisateur, nom_realisateur, prenom_realisateur
                     FROM realisateur";
         $stateReal = $pdo->query($sqlReal);
         $reals = $stateReal->fetchAll();
+
+        $sqlGenre = "SELECT nom_genre, id_genre
+                    FROM genre";
+        $stateGenre = $pdo->query($sqlGenre);
+        $genres = $stateGenre->fetchAll();
        
         if (isset($_POST['submit'])) {
             $titre = filter_input(INPUT_POST, "titre_film", FILTER_SANITIZE_SPECIAL_CHARS);
@@ -258,23 +259,35 @@ class CinemaController {
             $synopsis = filter_input(INPUT_POST, "synopsis", FILTER_SANITIZE_SPECIAL_CHARS);
             $url = filter_input(INPUT_POST, "affiche_film", FILTER_VALIDATE_URL);
             $id_real = $_POST['realisateurs'];
+            $id_genre = $resultjs;
 
             if ($titre && ($duree && $duree > 0) && ($annee && $annee > 0) && ($note && $note > 0 && $note <= 5) && $synopsis && $url) {
 
-                    $pdo = Connect::seConnecter();
-                    $sqlFilm = "INSERT INTO film (titre_film, annee_film, duree_film, resume_film, note_film, url_image, id_realisateur)
-                                VALUES (:titre, :annee, :duree, :resume_film, :note, :affiche, :identite)";
-                    $stateFilm = $pdo->prepare($sqlFilm);
-                    $stateFilm->execute([
-                        ":titre" => $_POST['titre_film'],
-                        ":annee" => $_POST['date_film'],
-                        ":duree" => $_POST['duree_film'],
-                        ":resume_film" => $_POST['synopsis'],
-                        ":note" => $_POST['note_film'],
-                        ":affiche" => $_POST['affiche_film'],
-                        ":identite" => $_POST['realisateurs']
-                    ]);
+                $pdo = Connect::seConnecter();
+                $sqlFilm = "INSERT INTO film (titre_film, annee_film, duree_film, resume_film, note_film, url_image, id_realisateur)
+                            VALUES (:titre, :annee, :duree, :resume_film, :note, :affiche, :identite)";
+                $stateFilm = $pdo->prepare($sqlFilm);
+                $stateFilm->execute([
+                    ":titre" => $_POST['titre_film'],
+                    ":annee" => $_POST['date_film'],
+                    ":duree" => $_POST['duree_film'],
+                    ":resume_film" => $_POST['synopsis'],
+                    ":note" => $_POST['note_film'],
+                    ":affiche" => $_POST['affiche_film'],
+                    ":identite" => $_POST['realisateurs']
+                ]);
                 $film = $stateFilm->fetch();
+
+                foreach ($id_genre as $id) {
+
+                    $sqlGenreFilm = "INSERT INTO genre_film (id_film, id_genre)
+                                    VALUES (LAST_INSERT_ID(:film), :id)";
+                    $stateGenreFilm = $pdo->prepare($sqlGenreFilm);
+                    $stateGenreFilm->execute([
+                        ":film" => $film,
+                        ":id" => $id
+                    ]);
+                }
             }
         }
         require "view/ajouterFilm.php";

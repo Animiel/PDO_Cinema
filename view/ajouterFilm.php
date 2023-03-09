@@ -48,14 +48,25 @@ ob_start();
                     </option>
                 <?php } ?>
             </select>
-        </label>
+        </label><br>
         Si le réalisateur n'apparaît pas dans la liste, merci de l'ajouter via ce lien : <a href="index.php?action=ajouterRealisateur" class="modif">Ajouter un réalisateur</a>
+    </p>
+
+    <p>
+        <label>Catégorie(s) du film :
+            <?php foreach ($genres as $genre) { ?>
+                <input class="box" type="checkbox" id=<?= $genre['nom_genre'] ?> name=<?= $genre['nom_genre'] ?> value=<?= $genre['id_genre'] ?>>
+                <label for=<?= $genre['nom_genre'] ?>><?= $genre['nom_genre'] ?></label>
+            <?php } ?>
+        </label>
     </p>
 
     <p>
         <input type="submit" name="submit" value="Ajouter le film">
     </p>
 </form>
+
+<script src="public/js/values.js"></script>
 
 <?php
 $titre = "Ajouter un film";
