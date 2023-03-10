@@ -5,25 +5,25 @@ ob_start();
 <form action="index.php?action=ajouterFilm" method="post">
     <p>
         <label>Titre du film :
-            <input type="text" name="titre_film">
+            <input type="text" name="titre_film" required>
         </label>
     </p>
 
     <p>
         <label>Date de sortie du film :
-            <input type="number" name="date_film">
+            <input type="date" name="date_film" required>
         </label>
     </p>
 
     <p>
         <label>Durée du film (en minutes) :
-            <input type="number" name="duree_film">
+            <input type="number" name="duree_film" required>
         </label>
     </p>
 
     <p>
         <label>Note du film (sur 5) :
-            <input type="number" name="note_film">
+            <input type="number" name="note_film" min="0" max="5" required>
         </label>
     </p>
 
@@ -41,7 +41,7 @@ ob_start();
 
     <p>
         <label>Réalisateur :
-            <select name="realisateurs">
+            <select name="realisateurs" required>
                 <?php foreach ($reals as $real) { ?>
                     <option value="<?= $real['id_realisateur'] ?>">
                         <?= $real['nom_realisateur'] ?> <?= $real['prenom_realisateur'] ?>
@@ -55,7 +55,7 @@ ob_start();
     <p>
         <label>Catégorie(s) du film :
             <?php foreach ($genres as $genre) { ?>
-                <input class="box" type="checkbox" id=<?= $genre['nom_genre'] ?> name=<?= $genre['nom_genre'] ?> value=<?= $genre['id_genre'] ?>>
+                <input class="box" type="checkbox" id=<?= $genre['nom_genre'] ?> name="genres[]" value=<?= $genre['id_genre'] ?>>
                 <label for=<?= $genre['nom_genre'] ?>><?= $genre['nom_genre'] ?></label>
             <?php } ?>
         </label>
@@ -65,8 +65,6 @@ ob_start();
         <input type="submit" name="submit" value="Ajouter le film">
     </p>
 </form>
-
-<script src="public/js/values.js"></script>
 
 <?php
 $titre = "Ajouter un film";

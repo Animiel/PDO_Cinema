@@ -5,13 +5,13 @@ ob_start();
 <form action="index.php?action=ajouterRealisateur" method="post">
     <p>
         <label>Nom du réalisateur :
-            <input type="text" name="name">
+            <input type="text" name="name" required>
         </label>
     </p>
 
     <p>
         <label>Prénom du réalisateur :
-            <input type="text" name="firstname">
+            <input type="text" name="firstname" required>
         </label>
     </p>
 

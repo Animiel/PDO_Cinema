@@ -5,7 +5,7 @@ ob_start();
 <form action="index.php?action=ajouterGenre" method="post">
     <p>
         <label>Nom du genre :
-            <input type="text" name="name">
+            <input type="text" name="name" required>
         </label>
     </p>
 

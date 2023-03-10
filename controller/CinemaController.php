@@ -86,7 +86,7 @@ class CinemaController {
             ]);
             $detailActeur = $acteurState->fetch();
 
-            $sqlFilmo = "SELECT titre_film, annee_film, nom_role
+            $sqlFilmo = "SELECT titre_film, DATE_FORMAT(annee_film, '%d/%m/%Y') AS date_sortie, nom_role
                         FROM film
                         INNER JOIN casting ON casting.id_film = film.id_film
                         INNER JOIN acteur ON casting.id_acteur = acteur.id_acteur
@@ -103,7 +103,7 @@ class CinemaController {
             foreach ($filmo as $film) {
                 $result .= "<tr>
                             <td>".$film['titre_film']."</td>
-                            <td>".$film['annee_film']."</td>
+                            <td>".$film['date_sortie']."</td>
                             <td>".$film['nom_role']."</td>
                             </tr>";
             }
@@ -137,7 +137,7 @@ class CinemaController {
             ]);
             $realisateur = $realState->fetch();
 
-            $sqlFilmo = "SELECT realisateur.id_realisateur, titre_film, annee_film, role.nom_role,CONCAT( realisateur.nom_realisateur, ' ',   realisateur.prenom_realisateur) AS civilite_real, CONCAT (nom_acteur,' ', prenom_acteur) as civilite_acteur
+            $sqlFilmo = "SELECT realisateur.id_realisateur, titre_film, DATE_FORMAT(annee_film, '%d/%m/%Y') AS date_sortie, role.nom_role,CONCAT( realisateur.nom_realisateur, ' ',   realisateur.prenom_realisateur) AS civilite_real, CONCAT (nom_acteur,' ', prenom_acteur) as civilite_acteur
                         FROM film
                         INNER JOIN casting ON casting.id_film = film.id_film
                         INNER JOIN role ON casting.id_role = role.id_role
@@ -181,7 +181,7 @@ class CinemaController {
             ]);
             $genre = $stateGenre->fetch();
 
-            $sqlFilms = "SELECT titre_film, annee_film, gf.id_genre
+            $sqlFilms = "SELECT titre_film, DATE_FORMAT(annee_film, '%d/%m/%Y') AS date_sortie, gf.id_genre
                         FROM film
                         INNER JOIN genre_film gf ON gf.id_film = film.id_film
                         WHERE gf.id_genre = :identite
@@ -221,7 +221,7 @@ class CinemaController {
             ]);
             $role = $stateRole->fetch();
 
-            $sqlCasting = "SELECT nom_acteur, prenom_acteur, titre_film, annee_film
+            $sqlCasting = "SELECT nom_acteur, prenom_acteur, titre_film, DATE_FORMAT(annee_film, '%d/%m/%Y') AS date_sortie
                         FROM acteur
                         INNER JOIN casting ON casting.id_acteur = acteur.id_acteur
                         INNER JOIN film ON casting.id_film = film.id_film
@@ -253,38 +253,40 @@ class CinemaController {
        
         if (isset($_POST['submit'])) {
             $titre = filter_input(INPUT_POST, "titre_film", FILTER_SANITIZE_SPECIAL_CHARS);
-            $annee = filter_input(INPUT_POST, "date_film", FILTER_VALIDATE_INT);
-            $duree = filter_input(INPUT_POST, "duree_film", FILTER_VALIDATE_INT);
-            $note = filter_input(INPUT_POST, "note_film", FILTER_VALIDATE_INT);
+            $annee = filter_input(INPUT_POST, "date_film", FILTER_SANITIZE_SPECIAL_CHARS);
+            $duree = filter_input(INPUT_POST, "duree_film", FILTER_SANITIZE_NUMBER_INT);
+            $note = filter_input(INPUT_POST, "note_film", FILTER_SANITIZE_NUMBER_INT);
             $synopsis = filter_input(INPUT_POST, "synopsis", FILTER_SANITIZE_SPECIAL_CHARS);
             $url = filter_input(INPUT_POST, "affiche_film", FILTER_VALIDATE_URL);
-            $id_real = $_POST['realisateurs'];
-            $id_genre = $resultjs;
+            $id_real = filter_input(INPUT_POST, "realisateurs", FILTER_SANITIZE_NUMBER_INT);
+            $genresChecked = filter_input(INPUT_POST, "genres", FILTER_DEFAULT, FILTER_REQUIRE_ARRAY);
 
-            if ($titre && ($duree && $duree > 0) && ($annee && $annee > 0) && ($note && $note > 0 && $note <= 5) && $synopsis && $url) {
+            if ($titre && ($duree && $duree > 0) && ($annee && $annee > 0) && ($note && $note > 0 && $note <= 5) && $synopsis && $url && $genresChecked) {
 
                 $pdo = Connect::seConnecter();
                 $sqlFilm = "INSERT INTO film (titre_film, annee_film, duree_film, resume_film, note_film, url_image, id_realisateur)
                             VALUES (:titre, :annee, :duree, :resume_film, :note, :affiche, :identite)";
                 $stateFilm = $pdo->prepare($sqlFilm);
                 $stateFilm->execute([
-                    ":titre" => $_POST['titre_film'],
-                    ":annee" => $_POST['date_film'],
-                    ":duree" => $_POST['duree_film'],
-                    ":resume_film" => $_POST['synopsis'],
-                    ":note" => $_POST['note_film'],
-                    ":affiche" => $_POST['affiche_film'],
-                    ":identite" => $_POST['realisateurs']
+                    ":titre" => $titre,
+                    ":annee" => $annee,
+                    ":duree" => $duree,
+                    ":resume_film" => $synopsis,
+                    ":note" => $note,
+                    ":affiche" => $url,
+                    ":identite" => $id_real
                 ]);
                 $film = $stateFilm->fetch();
 
-                foreach ($id_genre as $id) {
+                $lastId = $pdo->lastInsertId();
+
+                foreach ($genresChecked as $id) {
 
                     $sqlGenreFilm = "INSERT INTO genre_film (id_film, id_genre)
-                                    VALUES (LAST_INSERT_ID(:film), :id)";
+                                    VALUES (:film, :id)";
                     $stateGenreFilm = $pdo->prepare($sqlGenreFilm);
                     $stateGenreFilm->execute([
-                        ":film" => $film,
+                        ":film" => $lastId,
                         ":id" => $id
                     ]);
                 }

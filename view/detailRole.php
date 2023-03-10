@@ -15,7 +15,7 @@ ob_start();
             <tr>
                 <td><?= $cast['prenom_acteur'] ?> <?= $cast['nom_acteur'] ?></td>
                 <td><?= $cast['titre_film'] ?></td>
-                <td><?= $cast['annee_film'] ?></td>
+                <td><?= $cast['date_sortie'] ?></td>
             </tr>
         <?php } ?>
     </tbody>

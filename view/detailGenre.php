@@ -13,7 +13,7 @@ ob_start();
         <?php foreach ($listeFilms as $film) { ?>
             <tr>
                 <td><?= $film['titre_film'] ?></td>
-                <td><?= $film['annee_film'] ?></td>
+                <td><?= $film['date_sortie'] ?></td>
             </tr>
         <?php } ?>
     </tbody>

@@ -15,7 +15,7 @@ ob_start();
         <?php foreach ($filmo as $film) {?>
             <tr>
                 <td><?= $film['titre_film'] ?></td>
-                <td><?= $film['annee_film'] ?></td>
+                <td><?= $film['date_sortie'] ?></td>
                 <?php
                     if ($film['civilite_real'] == $film['civilite_acteur']) { ?>
                     <td><?= "Oui" ?></td>
