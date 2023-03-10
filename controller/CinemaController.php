@@ -239,10 +239,10 @@ class CinemaController {
     
     public function ajouterFilm() {
 
-        require "public/js/values.js";
         $pdo = Connect::seConnecter();
         $sqlReal = "SELECT id_realisateur, nom_realisateur, prenom_realisateur
-                    FROM realisateur";
+                    FROM realisateur
+                    ORDER BY nom_realisateur, prenom_realisateur";
         $stateReal = $pdo->query($sqlReal);
         $reals = $stateReal->fetchAll();
 
@@ -276,9 +276,8 @@ class CinemaController {
                     ":affiche" => $url,
                     ":identite" => $id_real
                 ]);
-                $film = $stateFilm->fetch();
 
-                $lastId = $pdo->lastInsertId();
+                $lastId = $pdo->lastInsertId();     // on récupère le dernier ID ajouter à la BDD
 
                 foreach ($genresChecked as $id) {
 
@@ -336,11 +335,26 @@ class CinemaController {
     }
 
     public function ajouterRole() {
+
+        $pdo = Connect::seConnecter();
+        $sqlActeurs = "SELECT id_acteur, nom_acteur, prenom_acteur
+                    FROM acteur
+                    ORDER BY nom_acteur, prenom_acteur";
+        $stateActeur = $pdo->query($sqlActeurs);
+        $acteurs = $stateActeur->fetchAll();
+
+        $sqlFilms = "SELECT id_film, titre_film
+                    FROM film
+                    ORDER BY titre_film";
+        $stateFilm = $pdo->query($sqlFilms);
+        $films = $stateFilm->fetchAll();
         
         if (isset($_POST['submit'])) {
             $nom = filter_input(INPUT_POST, "name", FILTER_SANITIZE_SPECIAL_CHARS);
+            $acteurSelect = filter_input(INPUT_POST, "acteurs", FILTER_DEFAULT, FILTER_REQUIRE_ARRAY);
+            $filmSelect = filter_input(INPUT_POST, "films", FILTER_DEFAULT, FILTER_REQUIRE_ARRAY);
 
-            if ($nom) {
+            if ($nom && $acteurs && $films) {
 
                 $pdo = Connect::seConnecter();
                 $sqlGenre = "INSERT INTO role (nom_role)
@@ -349,6 +363,22 @@ class CinemaController {
                 $stateGenre->execute([
                     ":nom" => $_POST['name']
                 ]);
+
+                $idrole = $pdo->lastInsertId();
+
+                foreach ($acteurSelect as $idacteur) {
+                    foreach ($filmSelect as $idfilm) {
+                        $pdo = Connect::seConnecter();
+                        $sqlAdd = "INSERT INTO casting (id_film, id_acteur, id_role)
+                                    VALUES (:idfilm, :idacteur, :idrole)";
+                        $stateAdd = $pdo->prepare($sqlAdd);
+                        $stateAdd->execute([
+                            ":idfilm" => $idfilm,
+                            ":idacteur" => $idacteur,
+                            ":idrole" => $idrole
+                        ]);
+                    }
+                }
             }
         }
         require "view/ajouterRole.php";

@@ -56,6 +56,7 @@ ob_start();
         <label>Catégorie(s) du film :
             <?php foreach ($genres as $genre) { ?>
                 <input class="box" type="checkbox" id=<?= $genre['nom_genre'] ?> name="genres[]" value=<?= $genre['id_genre'] ?>>
+                <!-- On utilise genres[] pour retourner un tableau, si on met juste genres il retournera la dernière valeur selectionnée -->
                 <label for=<?= $genre['nom_genre'] ?>><?= $genre['nom_genre'] ?></label>
             <?php } ?>
         </label>
