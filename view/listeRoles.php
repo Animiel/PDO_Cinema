@@ -1,8 +1,9 @@
 <?php
 ob_start();
 ?>
-
-<a href="index.php?action=ajouterRole" class="modif">Ajouter un rôle</a>
+<p class="modif">
+    <a href="index.php?action=ajouterRole">Ajouter un rôle</a>
+</p>
 
 <ul>
     <?php foreach ($roles as $role) { ?>

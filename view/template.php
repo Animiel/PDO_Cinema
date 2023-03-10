@@ -10,7 +10,7 @@
 </head>
 <body>
     <nav>
-        <a href="" class="navi">Acceuil</a>
+        <a href="" class="navi active">Acceuil</a>
         <a href="index.php?action=listeFilms" class="navi">Films</a>
         <a href="index.php?action=listeActeurs" class="navi">Acteurs</a>
         <a href="index.php?action=listeRealisateurs" class="navi">Réalisateurs</a>

@@ -1,8 +1,9 @@
 <?php
 ob_start();
 ?>
-
-<a href="index.php?action=ajouterGenre" class="modif">Ajouter un genre</a>
+<p class="modif">
+    <a href="index.php?action=ajouterGenre">Ajouter un genre</a>
+</p>
 
 <ul>
     <?php foreach ($genres as $genre) { ?>
